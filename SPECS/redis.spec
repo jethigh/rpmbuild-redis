@@ -1,3 +1,4 @@
+%define _topdir		%(echo $HOME)/rpmbuild-%{name}
 %define _conf_dir       %{_sysconfdir}/%{name}
 Name:           redis
 Version:        6.2.1
@@ -7,6 +8,11 @@ Summary:        A persistent key-value database
 License:        BSD and MIT
 URL:            http://redis.io
 Source0:        https://download.redis.io/releases/%{name}-%{version}.tar.gz
+
+
+BuildRequires: gcc
+BuildRequires: openssl-devel
+BuildRequires: systemd-devel
 
 %description
 %{name} is an advanced key-value store. It is similar to memcached but the dataset
