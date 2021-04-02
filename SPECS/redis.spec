@@ -11,6 +11,7 @@ Version:        6.2.1
 Release:        2%{?dist}
 Summary:        A persistent key-value database
 
+
 License:        BSD and MIT
 URL:            http://redis.io
 Source0:        https://download.redis.io/releases/%{name}-%{version}.tar.gz
@@ -19,6 +20,7 @@ Source0:        https://download.redis.io/releases/%{name}-%{version}.tar.gz
 BuildRequires: gcc
 BuildRequires: openssl-devel
 BuildRequires: systemd-devel
+
 
 %description
 %{name} is an advanced key-value store. It is similar to memcached but the dataset
@@ -32,6 +34,7 @@ different kind of sorting abilities.
 %prep
 %autosetup
 
+
 %build
 make %{make_flags}
 
@@ -44,6 +47,7 @@ install -Dpm0755 src/%{name}-benchmark  %{buildroot}%{_sbindir}/%{name}-benchmar
 install -Dpm0640 redis.conf             %{buildroot}%{_conf_dir}/redis.conf
 install -Dpm0640 sentinel.conf		%{buildroot}%{_conf_dir}/sentinel.conf
 
+
 %files
 %{_sbindir}/%{name}-server
 %{_sbindir}/%{name}-sentinel
@@ -53,9 +57,14 @@ install -Dpm0640 sentinel.conf		%{buildroot}%{_conf_dir}/sentinel.conf
 %{_conf_dir}/sentinel.conf
 
 
+%postun
+rm -r %{_conf_dir}
+
+
 %changelog
 * Fri Apr 02 2021 jethigh
 - Added BuildRequires
 - Defined _topdir to point custom rpmbuild direcotry name 
 - Added macros for make flags
 - Defined macroc moved to top
+- Deleting config dir after uninstall
