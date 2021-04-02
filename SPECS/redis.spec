@@ -1,5 +1,11 @@
-%define _topdir		%(echo $HOME)/rpmbuild-%{name}
-%define _conf_dir       %{_sysconfdir}/%{name}
+%global _topdir		%(echo $HOME)/rpmbuild-%{name}
+%global _conf_dir       %{_sysconfdir}/%{name}
+# Build variables
+%global tls_flag BUILD_TLS=yes
+%global sysd_flag USE_SYSTEMD=yes
+%global make_flags %{?tls_flag} %{?sysd_flag}
+
+
 Name:           redis
 Version:        6.2.1
 Release:        2%{?dist}
@@ -26,9 +32,8 @@ different kind of sorting abilities.
 %prep
 %autosetup
 
-
 %build
-make BUILD_TLS=yes USE_SYSTEMD=yes
+make %{make_flags}
 
 
 %install
@@ -52,3 +57,5 @@ install -Dpm0640 sentinel.conf		%{buildroot}%{_conf_dir}/sentinel.conf
 * Fri Apr 02 2021 jethigh
 - Added BuildRequires
 - Defined _topdir to point custom rpmbuild direcotry name 
+- Added macros for make flags
+- Defined macroc moved to top
