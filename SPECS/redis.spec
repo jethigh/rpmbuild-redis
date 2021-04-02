@@ -49,5 +49,6 @@ install -Dpm0640 sentinel.conf		%{buildroot}%{_conf_dir}/sentinel.conf
 
 
 %changelog
-* Sat Mar 13 2021 161044
-- 
+* Fri Apr 02 2021 jethigh
+- Added BuildRequires
+- Defined _topdir to point custom rpmbuild direcotry name 
