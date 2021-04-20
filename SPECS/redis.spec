@@ -7,8 +7,8 @@
 
 
 Name:           redis
-Version:        6.2.1
-Release:        2%{?dist}
+Version:        6.2.2
+Release:        1%{?dist}
 Summary:        A persistent key-value database
 
 
@@ -47,7 +47,6 @@ install -Dpm0755 src/%{name}-benchmark  %{buildroot}%{_sbindir}/%{name}-benchmar
 install -Dpm0640 redis.conf             %{buildroot}%{_conf_dir}/redis.conf
 install -Dpm0640 sentinel.conf		%{buildroot}%{_conf_dir}/sentinel.conf
 
-
 %files
 %{_sbindir}/%{name}-server
 %{_sbindir}/%{name}-sentinel
@@ -57,11 +56,24 @@ install -Dpm0640 sentinel.conf		%{buildroot}%{_conf_dir}/sentinel.conf
 %{_conf_dir}/sentinel.conf
 
 
+%pre
+groupadd -r %{name} &> /dev/null
+useradd -r -g %{name} -d %{_sharedstatedir}/%{name} -s /sbin/nologin \
+-c 'Redis Database Server' %{name} &> /dev/null
+
 %postun
 rm -r %{_conf_dir}
+userdel %{name}
 
 
 %changelog
+* Thu Apr 20 2021 jethigh
+- Creating redis group and user
+- Removing added group and user on uninstall
+- Adding systemd unit file
+- Removinf systemd unit file on uninstall
+- Enablilng redis service 
+
 * Fri Apr 02 2021 jethigh
 - Added BuildRequires
 - Defined _topdir to point custom rpmbuild direcotry name 
