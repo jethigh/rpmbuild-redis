@@ -8,13 +8,14 @@
 
 Name:           redis
 Version:        6.2.2
-Release:        1%{?dist}
+Release:        4%{?dist}
 Summary:        A persistent key-value database
 
 
 License:        BSD and MIT
 URL:            http://redis.io
 Source0:        https://download.redis.io/releases/%{name}-%{version}.tar.gz
+Source1:	%{name}.service
 
 
 BuildRequires: gcc
@@ -40,28 +41,44 @@ make %{make_flags}
 
 
 %install
-install -Dpm0755 src/%{name}-server     %{buildroot}%{_sbindir}/%{name}-server
-install -Dpm0755 src/%{name}-sentinel   %{buildroot}%{_sbindir}/%{name}-sentinel
-install -Dpm0755 src/%{name}-cli        %{buildroot}%{_sbindir}/%{name}-cli
-install -Dpm0755 src/%{name}-benchmark  %{buildroot}%{_sbindir}/%{name}-benchmark
+install -Dpm0755 src/%{name}-server     %{buildroot}%{_bindir}/%{name}-server
+install -Dpm0755 src/%{name}-sentinel   %{buildroot}%{_bindir}/%{name}-sentinel
+install -Dpm0755 src/%{name}-cli        %{buildroot}%{_bindir}/%{name}-cli
+install -Dpm0755 src/%{name}-benchmark  %{buildroot}%{_bindir}/%{name}-benchmark
 install -Dpm0640 redis.conf             %{buildroot}%{_conf_dir}/redis.conf
 install -Dpm0640 sentinel.conf		%{buildroot}%{_conf_dir}/sentinel.conf
+install -Dpm0640 %{SOURCE1} 		%{buildroot}%{_unitdir}/%{name}.service
+
 
 %files
-%{_sbindir}/%{name}-server
-%{_sbindir}/%{name}-sentinel
-%{_sbindir}/%{name}-cli
-%{_sbindir}/%{name}-benchmark
-%{_conf_dir}/redis.conf
+%{_bindir}/%{name}-server
+%{_bindir}/%{name}-sentinel
+%{_bindir}/%{name}-cli
+%{_bindir}/%{name}-benchmark
+%{_conf_dir}/%{name}.conf
 %{_conf_dir}/sentinel.conf
+%{_unitdir}/%{name}.service
 
 
 %pre
+# Add redis user and group
 groupadd -r %{name} &> /dev/null
-useradd -r -g %{name} -d %{_sharedstatedir}/%{name} -s /sbin/nologin \
--c 'Redis Database Server' %{name} &> /dev/null
+useradd -r -g %{name} -d %{_sharedstatedir}/%{name} -s /sbin/nologin -c 'Redis Database Server' %{name} &> /dev/null
+
+# Make working directory
+mkdir -p /var/lib/%{name}
+chown redis:redis /var/lib/%{name}
+
+%post
+# Change config files ownership
+chown %{name} %{_conf_dir}/%{name}.conf
+chown %{name} %{_conf_dir}/sentinel.conf
+
+# Change redis.conf to supervised
+sed -i 's/# supervised auto/supervised auto/g' %{_conf_dir}/%{name}.conf
 
 %postun
+# Remove config, and user
 rm -r %{_conf_dir}
 userdel %{name}
 
