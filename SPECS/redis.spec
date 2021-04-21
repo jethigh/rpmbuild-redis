@@ -91,6 +91,9 @@ sed -i 's/# supervised auto/supervised auto/g' %{_conf_dir}/%{name}.conf
 rm -r %{_conf_dir}
 userdel %{name}
 
+# Change working dir permisions to root
+chown -R root:root /var/lib/%{name}
+
 # Manage systemd service
 %systemd_postun_with_restart %{name}.service
 
