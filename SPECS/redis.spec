@@ -8,16 +8,15 @@
 
 Name:           redis
 Version:        6.2.2
-Release:        4%{?dist}
+Release:        1%{?dist}
 Summary:        A persistent key-value database
-
 
 License:        BSD and MIT
 URL:            http://redis.io
 Source0:        https://download.redis.io/releases/%{name}-%{version}.tar.gz
 Source1:	%{name}.service
 
-
+Requires: systemd
 BuildRequires: gcc
 BuildRequires: openssl-devel
 BuildRequires: systemd-devel
@@ -69,6 +68,7 @@ useradd -r -g %{name} -d %{_sharedstatedir}/%{name} -s /sbin/nologin -c 'Redis D
 mkdir -p /var/lib/%{name}
 chown redis:redis /var/lib/%{name}
 
+
 %post
 # Change config files ownership
 chown %{name} %{_conf_dir}/%{name}.conf
@@ -77,10 +77,22 @@ chown %{name} %{_conf_dir}/sentinel.conf
 # Change redis.conf to supervised
 sed -i 's/# supervised auto/supervised auto/g' %{_conf_dir}/%{name}.conf
 
+# Manage systemd service
+%systemd_post %{name}.service
+
+
+%preun
+# Manage systemd service
+%systemd_preun %{name}.service
+
+
 %postun
 # Remove config, and user
 rm -r %{_conf_dir}
 userdel %{name}
+
+# Manage systemd service
+%systemd_postun_with_restart %{name}.service
 
 
 %changelog
