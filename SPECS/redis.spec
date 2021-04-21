@@ -66,7 +66,7 @@ useradd -r -g %{name} -d %{_sharedstatedir}/%{name} -s /sbin/nologin -c 'Redis D
 
 # Make working directory
 mkdir -p /var/lib/%{name}
-chown redis:redis /var/lib/%{name}
+chown -R redis:redis /var/lib/%{name}
 
 
 %post
@@ -76,6 +76,9 @@ chown %{name} %{_conf_dir}/sentinel.conf
 
 # Change redis.conf to supervised
 sed -i 's/# supervised auto/supervised auto/g' %{_conf_dir}/%{name}.conf
+
+# Change working directory
+sed -i 's/dir .\//dir \/var\/lib\/%{name}\//g' %{_conf_dir}/%{name}.conf
 
 # Manage systemd service
 %systemd_post %{name}.service
