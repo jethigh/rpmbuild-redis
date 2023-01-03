@@ -32,7 +32,9 @@ pipeline {
         stage('Select tag, compress and move to SOURCES') {
             steps {
             sh """
-                cd ../
+                cd ../redis
+                git checkout tags/$REDIS_VERSION
+                cd ..
                 tar zcvf redis.tar.gz redis
                 mv redis.tar.gz rpmbuild-redis_$env.BRANCH_NAME
             """
