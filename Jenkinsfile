@@ -1,3 +1,7 @@
+def major = ''
+def minor = ''
+def patch = ''
+
 pipeline {
     agent any 
     environment {
@@ -16,7 +20,7 @@ pipeline {
             steps {
                 echo "Pulling Redis source code from: $REDIS_REPO"
                 script {
-                   def (major, minor, patch) = params.REDIS_VERSION.tokenize('.')
+                   major, minor, patch = params.REDIS_VERSION.tokenize('.')
                    echo major
                 }
                 //git branch: "${major}.${minor}", changelog: false, poll: false, url: "$env.REDIS_REPO"
