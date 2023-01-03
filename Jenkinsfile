@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo "Pulling Redis source code from: $REDIS_REPO"
                 script {
-                   major, minor, patch = params.REDIS_VERSION.tokenize('.')
+                   (major, minor, patch) = params.REDIS_VERSION.tokenize('.')
                    echo major
                 }
                 //git branch: "${major}.${minor}", changelog: false, poll: false, url: "$env.REDIS_REPO"
