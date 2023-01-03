@@ -18,14 +18,14 @@ pipeline {
     stages {
         stage('Download Redis sources') {
             steps {
-                sh 'ls -ltr'
+                sh 'pwd && ls -ltr'
                 echo "Pulling Redis source code from: $REDIS_REPO"
                 script {
                    (major, minor, patch) = params.REDIS_VERSION.tokenize('.')
                 }
                 git branch: "${major}.${minor}", changelog: false, poll: false, url: "$env.REDIS_REPO"
                 echo "For version: $params.REDIS_VERSION"
-                sh 'ls -ltr'
+                sh 'pwd && ls -ltr'
             }
         }
     }
