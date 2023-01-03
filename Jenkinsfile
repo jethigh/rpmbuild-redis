@@ -18,6 +18,7 @@ pipeline {
     stages {
         stage('Download Redis sources') {
             steps {
+                sh 'ls -ltr'
                 echo "Pulling Redis source code from: $REDIS_REPO"
                 script {
                    (major, minor, patch) = params.REDIS_VERSION.tokenize('.')
