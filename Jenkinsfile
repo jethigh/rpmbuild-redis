@@ -35,7 +35,7 @@ pipeline {
 
         stage('Second stage') {
             steps {
-            sh 'pwd && ls -ltr'
+            sh 'pwd && ls -ltr ../'
             }
         }
     }
