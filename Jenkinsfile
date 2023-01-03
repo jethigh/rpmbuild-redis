@@ -27,7 +27,7 @@ pipeline {
                 cd ..
                 git clone $REDIS_REPO
                 cd redis
-                git checkout tags/$REDIS_VERSION -b $major.$minor
+                git checkout tags/$REDIS_VERSION
                 """
                 echo "For version: $params.REDIS_VERSION"
                 sh 'pwd && ls -ltr'
