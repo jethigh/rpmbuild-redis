@@ -25,7 +25,7 @@ pipeline {
                 }
                 sh '''
                 cd ..
-                git pull $REDIS_REPO
+                git clone $REDIS_REPO
                 '''
  //               git branch: "${major}.${minor}", changelog: false, poll: false, url: "$env.REDIS_REPO"
                 echo "For version: $params.REDIS_VERSION"
