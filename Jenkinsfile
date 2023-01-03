@@ -18,25 +18,24 @@ pipeline {
     stages {
         stage('Download Redis sources') {
             steps {
-                sh 'pwd && ls -ltr'
                 echo "Pulling Redis source code from: $REDIS_REPO"
                 script {
                     (major, minor, patch) = params.REDIS_VERSION.tokenize('.')
                 }
                 sh """
-                cd ..
-                git clone $REDIS_REPO
-                cd redis
-                git checkout tags/$REDIS_VERSION
+                    cd ..
+                    git clone $REDIS_REPO
                 """
-                echo "For version: $params.REDIS_VERSION"
-                sh 'pwd && ls -ltr'
             }
         }
 
-        stage('Second stage') {
+        stage('Select tag, compress and move to SOURCES') {
             steps {
-            sh 'pwd && ls -ltr ../'
+            sh """
+                cd ../
+                tar zcvf redis.tar.gz redis
+                mv redis.tar.gz rpmbuild-redis_$env.BRANCH_NAME
+            """
             }
         }
     }
