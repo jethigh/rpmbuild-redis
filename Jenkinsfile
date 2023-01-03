@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Download Redis sources') {
             steps {
-                echo 'Pulling Redis source code from: ${REDIS_REPO} ' 
+                echo 'Pulling Redis source code from: $REDIS_REPO' 
             }
         }
     }
