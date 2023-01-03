@@ -23,11 +23,11 @@ pipeline {
                 script {
                     (major, minor, patch) = params.REDIS_VERSION.tokenize('.')
                 }
-                sh '''
+                sh """
                 cd ..
                 git clone $REDIS_REPO
                 git checkout tags/$REDIS_VERSION -b $major.$minor
-                '''
+                """
                 echo "For version: $params.REDIS_VERSION"
                 sh 'pwd && ls -ltr'
             }
