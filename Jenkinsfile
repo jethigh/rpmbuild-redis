@@ -15,6 +15,7 @@ pipeline {
         stage('Download Redis sources') {
             steps {
                 echo "Pulling Redis source code from: $REDIS_REPO"
+                git branch: '$REDIS_VERSION', changelog: false, poll: false, url: '$REDIS_REPO'
                 echo "For version: $params.REDIS_VERSION"
             }
         }
