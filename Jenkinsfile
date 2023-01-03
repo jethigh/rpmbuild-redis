@@ -35,7 +35,7 @@ pipeline {
                 cd ../redis
                 git checkout tags/$REDIS_VERSION
                 cd ..
-                tar zcvf redis.tar.gz redis
+                tar zcf redis.tar.gz redis
                 mv redis.tar.gz rpmbuild-redis_$env.BRANCH_NAME
             """
             }
