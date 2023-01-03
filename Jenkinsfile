@@ -15,7 +15,9 @@ pipeline {
         stage('Download Redis sources') {
             steps {
                 echo "Pulling Redis source code from: $REDIS_REPO"
-                def (major, minor, patch) = $params.REDIS_VERSION.tokenize('.')
+                script {
+                    def (major, minor, patch) = $params.REDIS_VERSION.tokenize('.')
+                }
                 git branch: "$major.$minor", changelog: false, poll: false, url: "$env.REDIS_REPO"
                 echo "For version: $params.REDIS_VERSION"
             }
