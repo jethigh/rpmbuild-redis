@@ -23,7 +23,10 @@ pipeline {
                 script {
                     (major, minor, patch) = params.REDIS_VERSION.tokenize('.')
                 }
-                sh 'git pull $REDIS_REPO'
+                sh '''
+                cd ..
+                git pull $REDIS_REPO'
+                '''
  //               git branch: "${major}.${minor}", changelog: false, poll: false, url: "$env.REDIS_REPO"
                 echo "For version: $params.REDIS_VERSION"
                 sh 'pwd && ls -ltr'
