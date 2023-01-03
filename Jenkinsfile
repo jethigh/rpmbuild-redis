@@ -20,10 +20,10 @@ pipeline {
             steps {
                 sh 'pwd && ls -ltr'
                 echo "Pulling Redis source code from: $REDIS_REPO"
-//                script {
-                (major, minor, patch) = params.REDIS_VERSION.tokenize('.')
-//                }
-
+                script {
+                    (major, minor, patch) = params.REDIS_VERSION.tokenize('.')
+                }
+                sh 'git pull $env.REDIS_REPO'
  //               git branch: "${major}.${minor}", changelog: false, poll: false, url: "$env.REDIS_REPO"
                 echo "For version: $params.REDIS_VERSION"
                 sh 'pwd && ls -ltr'
