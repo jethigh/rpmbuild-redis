@@ -23,7 +23,7 @@ pipeline {
                    (major, minor, patch) = params.REDIS_VERSION.tokenize('.')
                    echo major
                 }
-                //git branch: "${major}.${minor}", changelog: false, poll: false, url: "$env.REDIS_REPO"
+                git branch: "${major}.${minor}", changelog: false, poll: false, url: "$env.REDIS_REPO"
                 echo "For version: $params.REDIS_VERSION"
                 echo "${major}"
             }
