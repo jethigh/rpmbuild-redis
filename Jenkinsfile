@@ -21,7 +21,7 @@ pipeline {
                 }
                 //git branch: "${major}.${minor}", changelog: false, poll: false, url: "$env.REDIS_REPO"
                 echo "For version: $params.REDIS_VERSION"
-                echo "$params.major"
+                echo "${major}"
             }
         }
     }
