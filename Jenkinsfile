@@ -1,9 +1,12 @@
 pipeline {
     agent any 
+    environment {
+        REDIS_REPO = "https://github.com/redis/redis.git"
+    }
     stages {
-        stage('Stage 1') {
+        stage('Download Redis sources') {
             steps {
-                echo 'Hello world!' 
+                echo 'Pulling Redis source code from: ${REDIS_REPO} ' 
             }
         }
     }
