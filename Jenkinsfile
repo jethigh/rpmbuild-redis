@@ -3,7 +3,10 @@ def minor = ''
 def patch = ''
 
 pipeline {
-    agent any 
+    agent any
+    options { 
+        timestamps() 
+    } 
     environment {
         REDIS_REPO = "https://github.com/redis/redis.git"
     }
