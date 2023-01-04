@@ -28,7 +28,7 @@ pipeline {
                         return params.RHEL8
                     }
                 }
-            }
+        }
         stage('Download Redis sources') {
             steps {
                 echo "Pulling Redis source code from: $REDIS_REPO"
