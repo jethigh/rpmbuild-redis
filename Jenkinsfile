@@ -40,5 +40,32 @@ pipeline {
             """
             }
         }
+
+        stage('Build RPM package for RHEL7') {
+            when {
+                expression {
+                    return params.RHEL7
+                }
+            }
+            steps {
+                echo "Buildig RPM package for Red Hat Enterprise Linux 7" 
+            }
+        }
+
+        stage('Build RPM package for RHEL8') {
+            when {
+                expression {
+                    return params.RHEL8
+                }
+            }
+            steps {
+                echo "Buildig RPM package for Red Hat Enterprise Linux 8" 
+            }
+        }
     }
+
+    post {
+        always {
+            echo "End of pipeline."
+        }
 }
