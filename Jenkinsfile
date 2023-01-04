@@ -33,7 +33,7 @@ pipeline {
             steps {
             sh """
                 cd ../redis
-                git checkout tags/$REDIS_VERSION
+                git -c advice.detachedHead=false checkout tags/$REDIS_VERSION
                 cd ..
                 tar zcf redis.tar.gz redis
                 mv redis.tar.gz rpmbuild-redis_$env.BRANCH_NAME
@@ -68,4 +68,5 @@ pipeline {
         always {
             echo "End of pipeline."
         }
+    }
 }
