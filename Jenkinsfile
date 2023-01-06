@@ -3,7 +3,11 @@ def minor = ''
 def patch = ''
 
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            yamlFile 'buildPod.yaml'
+        }
+    }
     options { 
         timestamps() 
     } 
@@ -44,6 +48,12 @@ pipeline {
             }
         }
 
+        stage('Install rpmdevtools and rpmlint') {
+            steps {
+                sh ''
+            }
+        }
+            
         stage('Build RPM package for RHEL7') {
             when {
                 expression {
