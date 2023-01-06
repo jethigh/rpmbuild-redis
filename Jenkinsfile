@@ -63,7 +63,7 @@ pipeline {
             steps {
                 container('ubi7') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 7"
-//                    sh 'cat /etc/release*'
+                    sh 'cat /etc/release*'
                 }
             }
         }
