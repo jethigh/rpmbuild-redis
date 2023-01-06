@@ -4,13 +4,13 @@ spec:
   containers:
   - name: ubi7
     image: registry.access.redhat.com/ubi7/ubi:7.9-901
-#    command:
-#    - sleep
-#    args:
-#    - 99d
+    command:
+    - sleep
+    args:
+    - 99d
   - name: ubi8
     image: registry.access.redhat.com/ubi8/ubi:8.7-1037
-#    command:
-#    - sleep
-#    args:
-#    - 99d
+    command:
+    - sleep
+    args:
+    - 99d
