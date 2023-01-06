@@ -5,6 +5,7 @@ def patch = ''
 pipeline {
     agent {
         kubernetes {
+            defaultContainer 'jnlp'
             yamlFile 'buildPod.yaml'
         }
     }
