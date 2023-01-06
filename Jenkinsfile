@@ -8,7 +8,6 @@ pipeline {
             defaultContainer 'jnlp'
             yamlFile 'buildPod.yaml'
             inheritFrom 'k8s-slave'
-            yamlFile 'pod.yaml'
         }
     }
     options { 
