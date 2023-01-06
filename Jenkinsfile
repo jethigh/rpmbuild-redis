@@ -6,7 +6,7 @@ pipeline {
     agent {
         kubernetes {
             defaultContainer 'jnlp'
-//            yamlFile 'buildPod.yaml'
+            yamlFile 'buildPod.yaml'
             inheritFrom 'k8s-slave'
             yamlFile 'pod.yaml'
         }
@@ -64,7 +64,7 @@ pipeline {
                 }
             }
             steps {
-                container('maven') {
+                container('ubi7') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 7"
                     sh 'cat /etc/release*'
                 }
@@ -78,9 +78,9 @@ pipeline {
                 }
             }
             steps {
-                container('golang') {
+                container('ubi8') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 8"
-//                    sh 'cat /etc/release*'
+                    sh 'cat /etc/release*'
                 }
             }
         }
