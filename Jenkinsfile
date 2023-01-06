@@ -3,7 +3,9 @@ def minor = ''
 def patch = ''
 
 pipeline {
-    agent any
+    agent {
+        label 'k8s-slave'
+    }
     options { 
         timestamps() 
     } 
