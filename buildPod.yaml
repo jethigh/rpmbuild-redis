@@ -6,6 +6,11 @@ metadata:
 spec:
   containers:
   - name: ubi7
+    env:
+    - name: HTTP_PROXY
+      value: null
+    - name: HTTPS_PROXY
+      value: null
     image: registry.access.redhat.com/ubi7/ubi:7.9-901
     command:
     - sleep
