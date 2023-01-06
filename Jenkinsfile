@@ -63,7 +63,7 @@ pipeline {
                 }
             }
             steps {
-                container('ubi7') {
+                container('maven') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 7"
                     sh 'cat /etc/release*'
                 }
@@ -77,7 +77,7 @@ pipeline {
                 }
             }
             steps {
-                container('ubi8') {
+                container('golang') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 8"
 //                    sh 'cat /etc/release*'
                 }
