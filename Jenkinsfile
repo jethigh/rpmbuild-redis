@@ -61,7 +61,10 @@ pipeline {
                 }
             }
             steps {
-                echo "Buildig RPM package for Red Hat Enterprise Linux 7" 
+                container('ubi7') {
+                    echo "Buildig RPM package for Red Hat Enterprise Linux 7"
+                    sh 'cat /etc/release*'
+                }
             }
         }
 
@@ -72,7 +75,10 @@ pipeline {
                 }
             }
             steps {
-                echo "Buildig RPM package for Red Hat Enterprise Linux 8" 
+                container('ubi8') {
+                    echo "Buildig RPM package for Red Hat Enterprise Linux 8"
+                    eh 'cat /etc/release*'
+                }
             }
         }
     }
