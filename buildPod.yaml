@@ -8,6 +8,7 @@ spec:
     - sleep
     args:
     - 99d
+    tty: true
   - name: ubi8
     image: registry.access.redhat.com/ubi8/ubi:8.7-1037
     command:
