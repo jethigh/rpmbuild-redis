@@ -60,7 +60,7 @@ pipeline {
                     }
                     steps {
                         container('centos7') {
-                            sh 'yum install -y rpmdevtools rpmlint'
+                            sh 'sudo yum install -y rpmdevtools rpmlint'
                         }
                     }
                 }
@@ -72,7 +72,7 @@ pipeline {
                     }
                     steps {
                         container('centos8') {
-                            sh 'yum install -y rpmdevtools rpmlint'
+                            sh 'sudo yum install -y rpmdevtools rpmlint'
                         }
                     }
                 }
