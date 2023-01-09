@@ -5,9 +5,9 @@ def patch = ''
 pipeline {
     agent {
         kubernetes {
+            cloud 'crc'
             defaultContainer 'jnlp'
             yamlFile 'buildPod.yaml'
-            inheritFrom 'k8s-slave'
         }
     }
     options { 
@@ -65,7 +65,7 @@ pipeline {
             steps {
                 container('ubi7') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 7"
-                    sh 'cat /etc/release*'
+                    sh 'ls -ltr /home/jenkins/agent'
                 }
             }
         }
@@ -79,7 +79,7 @@ pipeline {
             steps {
                 container('ubi8') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 8"
-                    sh 'cat /etc/release*'
+                    sh 'ls -ltr /home/jenkins/agent'
                 }
             }
         }
