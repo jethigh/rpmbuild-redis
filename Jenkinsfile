@@ -65,7 +65,7 @@ pipeline {
             steps {
                 container('ubi7') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 7"
-                    sh 'ls -ltr /home/jenkins/agent'
+                    sh 'ls -ltr /home/jenkins/agent/workspace'
                 }
             }
         }
@@ -79,7 +79,7 @@ pipeline {
             steps {
                 container('ubi8') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 8"
-                    sh 'ls -ltr /home/jenkins/agent'
+                    sh 'ls -ltr /home/jenkins/agent/workspace'
                 }
             }
         }
