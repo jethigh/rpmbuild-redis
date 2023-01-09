@@ -17,8 +17,8 @@ pipeline {
         REDIS_REPO = "https://github.com/redis/redis.git"
     }
     parameters {
-        booleanParam(name: "RHEL7", defaultValue: true, description: "Build package for RHEL7")
-        booleanParam(name: "RHEL8", defaultValue: true, description: "Build package for RHEL8")
+        booleanParam(name: "Centos7", defaultValue: true, description: "Build package for Centos7")
+        booleanParam(name: "Centos8", defaultValue: true, description: "Build package for Centos8")
         string(name: "REDIS_VERSION", defaultValue: "7.0.7", trim: true, description: "Please enter version from witch rpm package going to be builded.")
 //        text(name: "TEST_TEXT", defaultValue: "Jenkins Pipeline Tutorial", description: "Sample multi-line text parameter")
 //        password(name: "TEST_PASSWORD", defaultValue: "SECRET", description: "Sample password parameter")
@@ -52,41 +52,55 @@ pipeline {
 
         stage('Install rpmdevtools and rpmlint') {
             parallel {
-                stage('On RHEL7') {
+                stage('On Centos7') {
+                    when {
+                        expression {
+                            return params.Centos7
+                        }
+                    }
                     steps {
-                        sh 'yum install -y rpmdevtools rpmlint'
+                        container('centos7') {
+                            sh 'yum install -y rpmdevtools rpmlint'
+                        }
                     }
                 }
-                stage('On RHEL8') {
+                stage('On Centos8') {
+                    when {
+                        expression {
+                            return params.Centos7
+                        }
+                    }
                     steps {
-                        sh 'yum install -y rpmdevtools rpmlint'
+                        container('centos8') {
+                            sh 'yum install -y rpmdevtools rpmlint'
+                        }
                     }
                 }
             }
         }
             
-        stage('Build RPM package for RHEL7') {
+        stage('Build RPM package for Centos7') {
             when {
                 expression {
-                    return params.RHEL7
+                    return params.Centos7
                 }
             }
             steps {
-                container('ubi7') {
+                container('centos7') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 7"
                     sh 'ls -ltr /home/jenkins/agent/workspace'
                 }
             }
         }
 
-        stage('Build RPM package for RHEL8') {
+        stage('Build RPM package for Centos8') {
             when {
                 expression {
-                    return params.RHEL8
+                    return params.Centos8
                 }
             }
             steps {
-                container('ubi8') {
+                container('centos8') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 8"
                     sh 'ls -ltr /home/jenkins/agent/workspace'
                 }
