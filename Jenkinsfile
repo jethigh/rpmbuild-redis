@@ -51,8 +51,17 @@ pipeline {
         }
 
         stage('Install rpmdevtools and rpmlint') {
-            steps {
-                sh ''
+            parallel {
+                stage('On RHEL7') {
+                    steps {
+                        sh 'yum install -y rpmdevtools rpmlint'
+                    }
+                }
+                stage('On RHEL8') {
+                    steps {
+                        sh 'yum install -y rpmdevtools rpmlint'
+                    }
+                }
             }
         }
             
