@@ -4,8 +4,6 @@ metadata:
   labels:
     rpmbuild: redis
 spec:
-  securityContext:
-    runAsUser: root # default UID of jenkins user in agent image
   containers:
   - name: centos7
     image: centos:7
@@ -13,10 +11,15 @@ spec:
     - sleep
     args:
     - 99d
-    tty: true
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsUser: 0
   - name: centos8
     image: centos:8
     command:
     - sleep
     args:
     - 99d
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsUser: 0
