@@ -4,6 +4,8 @@ metadata:
   labels:
     rpmbuild: redis
 spec:
+  securityContext:
+    runAsUser: root # default UID of jenkins user in agent image
   containers:
   - name: centos7
     image: centos:7
