@@ -49,16 +49,6 @@ pipeline {
             """
             }
         }
-
-        stage('Install rpmdevtools, rpmlint and mock') {
-            steps {
-                container('centos9') {
-                    sh 'dnf install -y rpmdevtools rpmlint'
-                    sh 'dnf install -y epel-release epel-next-release'
-                    sh 'dnf install -y mock'
-                }
-            }
-        }
             
         stage('Build RPM package for Centos7') {
             when {
@@ -67,7 +57,7 @@ pipeline {
                 }
             }
             steps {
-                container('centos9') {
+                container('mock-rpmbuilder') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 7"
                 }
             }
@@ -80,7 +70,7 @@ pipeline {
                 }
             }
             steps {
-                container('centos9') {
+                container('mock-rpmbuilder') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 8"
                 }
             }

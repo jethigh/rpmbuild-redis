@@ -5,11 +5,8 @@ metadata:
     rpmbuild: redis
 spec:
   containers:
-  - name: centos9
-    image: quay.io/centos/centos:stream9
-    securityContext:
-      allowPrivilegeEscalation: false
-      runAsUser: 0
+  - name: mock-rpmbuilder
+    image: mmornati/mock-rpmbuilder
     command:
     - sleep
     args:
