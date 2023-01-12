@@ -7,6 +7,9 @@ spec:
   containers:
   - name: centos9
     image: quay.io/centos/centos:stream9
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsUser: 0
     command:
     - sleep
     args:
