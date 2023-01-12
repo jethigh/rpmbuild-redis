@@ -50,31 +50,12 @@ pipeline {
             }
         }
 
-        stage('Install rpmdevtools and rpmlint') {
-            parallel {
-                stage('On Centos7') {
-                    when {
-                        expression {
-                            return params.Centos7
-                        }
-                    }
-                    steps {
-                        container('centos7') {
-                            sh 'yum install -y rpmdevtools rpmlint'
-                        }
-                    }
-                }
-                stage('On Centos8') {
-                    when {
-                        expression {
-                            return params.Centos7
-                        }
-                    }
-                    steps {
-                        container('centos8') {
-                            sh 'yum install -y rpmdevtools rpmlint'
-                        }
-                    }
+        stage('Install rpmdevtools, rpmlint and mock') {
+            steps {
+                container('centos9') {
+                    sh 'dnf install -y rpmdevtools rpmlint'
+                    sh 'dnf install -y epel-release epel-next-release'
+                    sh 'dnf install -y mock'
                 }
             }
         }
@@ -86,9 +67,8 @@ pipeline {
                 }
             }
             steps {
-                container('centos7') {
+                container('centos9') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 7"
-                    sh 'ls -ltr /home/jenkins/agent/workspace'
                 }
             }
         }
@@ -100,9 +80,8 @@ pipeline {
                 }
             }
             steps {
-                container('centos8') {
+                container('centos9') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 8"
-                    sh 'ls -ltr /home/jenkins/agent/workspace'
                 }
             }
         }
