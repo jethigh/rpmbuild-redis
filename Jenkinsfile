@@ -44,8 +44,8 @@ pipeline {
                 cd ../redis
                 git -c advice.detachedHead=false checkout tags/$REDIS_VERSION
                 cd ..
-                tar zcf $REDIS_VERSION.tar.gz redis
-                mv $REDIS_VERSION.tar.gz $env.WORKSPACE/SOURCES/
+                tar zcf ${REDIS_VERSION}.tar.gz redis/'
+                mv ${REDIS_VERSION}.tar.gz $env.WORKSPACE/SOURCES/
             """
             }
         }
@@ -73,7 +73,7 @@ pipeline {
             steps {
                 container('mock-rpmbuilder') {
                     sh """
-                    r SPECS/redis.spec
+                    rpmbuild -bs SPECS/redis.spec
                     """
                 }
             }
