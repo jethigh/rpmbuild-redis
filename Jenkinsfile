@@ -73,9 +73,7 @@ pipeline {
             steps {
                 container('mock-rpmbuilder') {
                     sh """
-                    echo $PWD
-                    rpm --eval %{_topdir}
-                    rpmbuild -bs SPECS/redis.spec
+                    rpmbuild --define '_topdir `pwd`' -bs SPECS/redis.spec
                     """
                 }
             }
@@ -90,7 +88,7 @@ pipeline {
             steps {
                 container('mock-rpmbuilder') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 7"
-                    sh 'ls -R'
+                    sh 'mock -r centos+epel-7-x86_64 SRPMS/redis-7.0.7-1.el8.src.rpm'
                 }
             }
         }
