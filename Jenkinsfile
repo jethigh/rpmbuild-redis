@@ -44,7 +44,8 @@ pipeline {
                 cd ../redis
                 git -c advice.detachedHead=false checkout tags/$REDIS_VERSION
                 cd ..
-                tar zcf ${REDIS_VERSION}.tar.gz redis/
+                mv redis redis-${REDIS_VERSION}
+                tar zcf ${REDIS_VERSION}.tar.gz redis-${REDIS_VERSION}/
                 mv ${REDIS_VERSION}.tar.gz $env.WORKSPACE/SOURCES/
             """
             }
