@@ -63,8 +63,6 @@ pipeline {
             steps {
                 container('mock-rpmbuilder') {
                     sh """
-                        echo $PWD
-                        rpm --eval %{_topdir}
                         rpmlint SPECS/redis.spec
                     """
                 }
@@ -75,6 +73,8 @@ pipeline {
             steps {
                 container('mock-rpmbuilder') {
                     sh """
+                    echo $PWD
+                    rpm --eval %{_topdir}
                     rpmbuild -bs SPECS/redis.spec
                     """
                 }
