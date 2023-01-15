@@ -44,8 +44,8 @@ pipeline {
                 cd ../redis
                 git -c advice.detachedHead=false checkout tags/$REDIS_VERSION
                 cd ..
-                tar zcf redis.tar.gz redis
-                mv redis.tar.gz $env.WORKSPACE/SOURCES/
+                tar zcf $REDIS_VERSION.tar.gz redis
+                mv $REDIS_VERSION.tar.gz $env.WORKSPACE/SOURCES/
             """
             }
         }
@@ -61,9 +61,21 @@ pipeline {
 
         stage('Checking syntax of spec file') {
             steps {
-            sh """
-                rpmlint SPECS/redis.spec
-            """
+                container('mock-rpmbuilder') {
+                    sh """
+                    rpmlint SPECS/redis.spec
+                    """
+                }
+            }
+        }
+
+        stage('Build SRPM') {
+            steps {
+                container('mock-rpmbuilder') {
+                    sh """
+                    r SPECS/redis.spec
+                    """
+                }
             }
         }
 
