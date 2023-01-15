@@ -1,4 +1,4 @@
-%global _topdir     %(echo $HOME)
+%global _topdir     %(echo $PWD)
 %global _conf_dir   %{_sysconfdir}/%{name}
 # Build variables
 %global tls_flag    BUILD_TLS=yes
