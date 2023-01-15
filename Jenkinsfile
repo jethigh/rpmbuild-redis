@@ -45,11 +45,28 @@ pipeline {
                 git -c advice.detachedHead=false checkout tags/$REDIS_VERSION
                 cd ..
                 tar zcf redis.tar.gz redis
-                mv redis.tar.gz rpmbuild-redis_$env.BRANCH_NAME
+                mv redis.tar.gz $env.WORKSPACE/SOURCES/
             """
             }
         }
-            
+
+        stage('Set Version in Spec file') {
+            steps {
+            echo "Setting version: $env.VERSION"
+            sh """
+                sed -i 's/^Version.*/Version: $env.VERSION/g' $env.WORKSPACE/SPEC/redis.spec
+            """
+            }
+        }
+
+        stage('Checking syntax of spec file') {
+            steps {
+            sh """
+                rpmlint SPECS/redis.spec
+            """
+            }
+        }
+
         stage('Build RPM package for Centos7') {
             when {
                 expression {

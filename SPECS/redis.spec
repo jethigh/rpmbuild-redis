@@ -1,25 +1,25 @@
-%global _topdir		%(echo $HOME)/rpmbuild-%{name}
-%global _conf_dir       %{_sysconfdir}/%{name}
+%global _topdir     %(echo $HOME)/rpmbuild-%{name}
+%global _conf_dir   %{_sysconfdir}/%{name}
 # Build variables
-%global tls_flag BUILD_TLS=yes
-%global sysd_flag USE_SYSTEMD=yes
-%global make_flags %{?tls_flag} %{?sysd_flag}
+%global tls_flag    BUILD_TLS=yes
+%global sysd_flag   USE_SYSTEMD=yes
+%global make_flags  %{?tls_flag} %{?sysd_flag}
 
 
 Name:           redis
-Version:        6.2.2
+Version:        7.0.7
 Release:        1%{?dist}
 Summary:        A persistent key-value database
 
 License:        BSD and MIT
 URL:            http://redis.io
 Source0:        https://download.redis.io/releases/%{name}-%{version}.tar.gz
-Source1:	%{name}.service
+Source1:        %{name}.service
 
-Requires: systemd
-BuildRequires: gcc
-BuildRequires: openssl-devel
-BuildRequires: systemd-devel
+Requires:       systemd
+BuildRequires:  gcc
+BuildRequires:  openssl-devel
+BuildRequires:  systemd-devel
 
 
 %description
@@ -44,6 +44,8 @@ install -Dpm0755 src/%{name}-server     %{buildroot}%{_bindir}/%{name}-server
 install -Dpm0755 src/%{name}-sentinel   %{buildroot}%{_bindir}/%{name}-sentinel
 install -Dpm0755 src/%{name}-cli        %{buildroot}%{_bindir}/%{name}-cli
 install -Dpm0755 src/%{name}-benchmark  %{buildroot}%{_bindir}/%{name}-benchmark
+install -Dpm0755 src/%{name}-check-aof  %{buildroot}%{_bindir}/%{name}-check-aof
+install -Dpm0755 src/%{name}-check-rdb  %{buildroot}%{_bindir}/%{name}-check-rdb
 install -Dpm0640 redis.conf             %{buildroot}%{_conf_dir}/redis.conf
 install -Dpm0640 sentinel.conf		%{buildroot}%{_conf_dir}/sentinel.conf
 install -Dpm0640 %{SOURCE1} 		%{buildroot}%{_unitdir}/%{name}.service
@@ -54,6 +56,8 @@ install -Dpm0640 %{SOURCE1} 		%{buildroot}%{_unitdir}/%{name}.service
 %{_bindir}/%{name}-sentinel
 %{_bindir}/%{name}-cli
 %{_bindir}/%{name}-benchmark
+%{_bindir}/%{name}-check-aof
+%{_bindir}/%{name}-check-rdb
 %{_conf_dir}/%{name}.conf
 %{_conf_dir}/sentinel.conf
 %{_unitdir}/%{name}.service
@@ -102,7 +106,11 @@ chown -R root:root /var/lib/%{name}
 
 
 %changelog
-* Thu Apr 20 2021 jethigh
+* Sun Jan 15 2023 jethigh
+- Version 7.0.7 of redis sources
+- Added repair tools
+
+* Tue Apr 20 2021 jethigh
 - Creating redis group and user
 - Removing added group and user on uninstall
 - Adding systemd unit file
