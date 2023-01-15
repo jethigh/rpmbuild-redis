@@ -6,7 +6,8 @@ metadata:
 spec:
   containers:
   - name: mock-rpmbuilder
-    image: jethigh/mock-rpmbuilder
+    image: jethigh/mock-rpmbuilder\
+    command:
     - sleep
     args:
     - 99d

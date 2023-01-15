@@ -59,6 +59,7 @@ pipeline {
             steps {
                 container('mock-rpmbuilder') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 7"
+                    sh 'ls -R'
                 }
             }
         }
