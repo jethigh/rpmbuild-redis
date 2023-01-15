@@ -1,4 +1,3 @@
-#%global _topdir     %(echo $HOME)/rpmbuild-%{name}
 %global _topdir     %(echo $PWD)
 %global _conf_dir   %{_sysconfdir}/%{name}
 # Build variables
@@ -14,7 +13,6 @@ Summary:        A persistent key-value database
 
 License:        BSD and MIT
 URL:            https://github.com
-#Source0:        https://download.redis.io/releases/%{name}-%{version}.tar.gz
 Source0:        https://github.com/redis/redis/archive/%{version}.tar.gz
 Source1:        %{name}.service
 
