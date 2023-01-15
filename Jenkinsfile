@@ -52,9 +52,9 @@ pipeline {
 
         stage('Set Version in Spec file') {
             steps {
-            echo "Setting version: $env.VERSION"
+            echo "Setting version: $env.REDIS_VERSION"
             sh """
-                sed -i 's/^Version.*/Version: $env.VERSION/g' $env.WORKSPACE/SPEC/redis.spec
+                sed -i 's/^Version.*/Version: $env.REDIS_VERSION/g' $env.WORKSPACE/SPECS/redis.spec
             """
             }
         }
