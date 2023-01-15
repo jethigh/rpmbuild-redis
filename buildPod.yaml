@@ -5,8 +5,8 @@ metadata:
     rpmbuild: redis
 spec:
   containers:
-  - name: centos8
-    image: quay.io/centos/centos:stream8
+  - name: mock-rpmbuilder
+    image: jethigh/mock-rpmbuilder
     - sleep
     args:
     - 99d

@@ -20,8 +20,4 @@ __pycache__/
 *.war
 
 # RPMS
-BUILD
 BUILDROOT
-RPMS
-SRPMS
-*.rpm
