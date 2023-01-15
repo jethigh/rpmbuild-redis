@@ -63,7 +63,7 @@ pipeline {
             steps {
                 container('mock-rpmbuilder') {
                     sh """
-                    rpmlint SPECS/redis.spec
+                        rpmlint SPECS/redis.spec
                     """
                 }
             }
