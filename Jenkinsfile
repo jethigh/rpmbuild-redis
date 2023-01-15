@@ -73,7 +73,7 @@ pipeline {
             steps {
                 container('mock-rpmbuilder') {
                     sh """
-                    rpmbuild --define '_topdir `pwd`' -bs SPECS/redis.spec
+                    rpmbuild --define '_topdir `pwd`' -bb SPECS/redis.spec
                     """
                 }
             }
