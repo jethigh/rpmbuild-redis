@@ -79,7 +79,7 @@ pipeline {
             steps {
                 container('mock-rpmbuilder7') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 7"
-                    sh 'rpmbuild --define '_topdir `pwd`' -bb SPECS/redis.spec'
+                    sh "rpmbuild --define '_topdir `pwd`' -bb SPECS/redis.spec"
                 }
             }
         }
@@ -93,7 +93,7 @@ pipeline {
             steps {
                 container('mock-rpmbuilder8') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 8"
-                    sh 'rpmbuild --define '_topdir `pwd`' -bb SPECS/redis.spec'
+                    sh "rpmbuild --define '_topdir `pwd`' -bb SPECS/redis.spec"
                 }
             }
         }
