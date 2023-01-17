@@ -44,9 +44,8 @@ pipeline {
                 cd ../redis
                 git -c advice.detachedHead=false checkout tags/$REDIS_VERSION
                 cd ..
-                mv redis redis-${REDIS_VERSION}
-                tar zcf ${REDIS_VERSION}.tar.gz redis-${REDIS_VERSION}/
-                mv ${REDIS_VERSION}.tar.gz $env.WORKSPACE/SOURCES/
+                tar zcf redis.tar.gz redis/
+                mv redis.tar.gz $env.WORKSPACE/SOURCES/
             """
             }
         }
@@ -79,7 +78,9 @@ pipeline {
             steps {
                 container('mock-rpmbuilder7') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 7"
-                    sh "rpmbuild --define '_topdir `pwd`' -bb SPECS/redis.spec"
+                    sh """
+                    cd ..
+                    rpmbuild --define '_topdir `pwd`' -bb SPECS/redis.spec"""
                 }
             }
         }

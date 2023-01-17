@@ -1,4 +1,4 @@
-%global _topdir     %(echo $PWD)
+%global _topdir %(echo $PWD)/
 %global _conf_dir   %{_sysconfdir}/%{name}
 # Build variables
 %global tls_flag    BUILD_TLS=yes
@@ -13,7 +13,7 @@ Summary:        A persistent key-value database
 
 License:        BSD and MIT
 URL:            https://github.com
-Source0:        https://github.com/redis/redis/archive/%{version}.tar.gz
+Source0:        https://github.com/redis/redis/archive/%{name}.tar.gz
 Source1:        %{name}.service
 
 Requires:       systemd
@@ -32,7 +32,7 @@ different kind of sorting abilities.
 
 
 %prep
-%autosetup
+%autosetup -n redis
 
 
 %build
