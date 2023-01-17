@@ -70,16 +70,6 @@ pipeline {
             }
         }
 
-        stage('Build SRPM') {
-            steps {
-                container('mock-rpmbuilder') {
-                    sh """
-                    rpmbuild --define '_topdir `pwd`' -bb SPECS/redis.spec
-                    """
-                }
-            }
-        }
-
         stage('Build RPM package for Centos7') {
             when {
                 expression {
@@ -87,9 +77,9 @@ pipeline {
                 }
             }
             steps {
-                container('mock-rpmbuilder') {
+                container('mock-rpmbuilder7') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 7"
-                    sh 'mock -r centos+epel-7-x86_64 SRPMS/redis-7.0.7-1.el8.src.rpm'
+                    sh 'rpmbuild --define '_topdir `pwd`' -bb SPECS/redis.spec'
                 }
             }
         }
@@ -101,8 +91,9 @@ pipeline {
                 }
             }
             steps {
-                container('mock-rpmbuilder') {
+                container('mock-rpmbuilder8') {
                     echo "Buildig RPM package for Red Hat Enterprise Linux 8"
+                    sh 'rpmbuild --define '_topdir `pwd`' -bb SPECS/redis.spec'
                 }
             }
         }

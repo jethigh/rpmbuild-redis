@@ -5,7 +5,13 @@ metadata:
     rpmbuild: redis
 spec:
   containers:
-  - name: mock-rpmbuilder
+  - name: mock-rpmbuilder7
+    image: jethigh/mock-rpmbuilder:centos7
+    command:
+    - sleep
+    args:
+    - 99d
+  - name: mock-rpmbuilder8
     image: jethigh/mock-rpmbuilder:centos8
     command:
     - sleep
