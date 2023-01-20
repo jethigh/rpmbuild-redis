@@ -17,8 +17,8 @@ pipeline {
         REDIS_REPO = "https://github.com/redis/redis.git"
     }
     parameters {
-        booleanParam(name: "Centos7", defaultValue: true, description: "Build package for Centos7")
-        booleanParam(name: "Centos8", defaultValue: true, description: "Build package for Centos8")
+        booleanParam(name: "CENTOS7", defaultValue: true, description: "Build package for Centos7")
+        booleanParam(name: "CENTOS8", defaultValue: true, description: "Build package for Centos8")
         string(name: "REDIS_VERSION", defaultValue: "7.0.7", trim: true, description: "Please enter version from witch rpm package going to be builded.")
 //        text(name: "TEST_TEXT", defaultValue: "Jenkins Pipeline Tutorial", description: "Sample multi-line text parameter")
 //        password(name: "TEST_PASSWORD", defaultValue: "SECRET", description: "Sample password parameter")
@@ -60,8 +60,18 @@ pipeline {
         }
 
         stage('Checking syntax of spec file') {
+            script {
+                if (env.CENTOS7 == true) {
+                    env.LINTIN = "mock-rpmbuilder7"
+                } else if (params.CENTOS8 == true) {
+                    env.LINTIN = "mock-rpmbuilder8"
+                } else {
+                    currentBuild.result = 'FAILURE'
+                    return
+                }
+            }
             steps {
-                container('mock-rpmbuilder') {
+                container(${env.LINTIN}) {
                     sh """
                         rpmlint SPECS/redis.spec
                     """
@@ -72,7 +82,7 @@ pipeline {
         stage('Build RPM package for Centos7') {
             when {
                 expression {
-                    return params.Centos7
+                    return params.CENTOS7
                 }
             }
             steps {
@@ -85,8 +95,8 @@ pipeline {
 
         stage('Build RPM package for Centos8') {
             when {
-                expression {
-                    return params.Centos8
+                   expression {
+                    return params.CENTOS8
                 }
             }
             steps {
