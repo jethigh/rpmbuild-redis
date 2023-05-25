@@ -8,6 +8,7 @@ pipeline {
             cloud 'crc'
             defaultContainer 'jnlp'
             yamlFile 'buildPod.yaml'
+            idleMinutes '30'
         }
     }
     options { 
