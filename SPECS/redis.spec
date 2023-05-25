@@ -47,7 +47,7 @@ install -Dpm0755 src/%{name}-benchmark  %{buildroot}%{_bindir}/%{name}-benchmark
 install -Dpm0755 src/%{name}-check-aof  %{buildroot}%{_bindir}/%{name}-check-aof
 install -Dpm0755 src/%{name}-check-rdb  %{buildroot}%{_bindir}/%{name}-check-rdb
 install -Dpm0640 redis.conf             %{buildroot}%{_conf_dir}/redis.conf
-install -Dpm0640 sentinel.conf		%{buildroot}%{_conf_dir}/sentinel.conf
+install -Dpm0640 sentinel.conf      %{buildroot}%{_conf_dir}/sentinel.conf
 install -Dpm0640 %{SOURCE1} 		%{buildroot}%{_unitdir}/%{name}.service
 
 
