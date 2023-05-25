@@ -60,18 +60,8 @@ pipeline {
         }
 
         stage('Checking syntax of spec file') {
-            script {
-                if (env.CENTOS7 == true) {
-                    env.LINTIN = "mock-rpmbuilder7"
-                } else if (params.CENTOS8 == true) {
-                    env.LINTIN = "mock-rpmbuilder8"
-                } else {
-                    currentBuild.result = 'FAILURE'
-                    return
-                }
-            }
             steps {
-                container(${env.LINTIN}) {
+                container('mock-rpmbuilder7') {
                     sh """
                         rpmlint SPECS/redis.spec
                     """
